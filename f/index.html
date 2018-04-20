@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Test your LOL ping before you play and avoid frustration in game">
+  <meta name="keyword" content="League of Legends, LOL, Ping, Check, Test, Reduce, Fix">
+
+
+  <title>
+    Ping LoL Test
+  </title>
+  <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
+  <script>
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyCTeOeyzcIV1uZytqCiHcBXNWjITFSpkiU",
+  authDomain: "ping-e8baf.firebaseapp.com",
+  databaseURL: "https://ping-e8baf.firebaseio.com",
+  projectId: "ping-e8baf",
+  storageBucket: "ping-e8baf.appspot.com",
+  messagingSenderId: "460290836531"
+};
+firebase.initializeApp(config);
+</script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<style>
+html,body{
+  background-color: #000000;
+  padding-top: 20px;
+  font-family: 'Times New Roman';
+  color: #aaa;
+  text-shadow: 2px 2px 2px #000;
+  background-image: url('/img/backdrop.svg');
+  /*background-repeat: no-repeat;*/
+  background-size: cover;
+  background-position: 50%;
+}
+#myChart{
+  /*width: 100%;*/
+  display: none;
+}
+
+
+.img{
+  width: 100%;
+}
+#radar{
+  display: none;
+  padding: 80px 0;
+  width: 50%;
+}
+
+h1{
+  font-weight: 200;
+}
+.chart-holder{
+  /*background-color: rgba(0,0,0,0.05);*/
+  border: 0px solid;
+  border-radius: 3px;
+  width: 100%;
+  /*padding: 80px 0;*/
+  margin-bottom: 20px;
+}
+button{
+  font-size: 18pt !important;
+  height: 50px !important;
+  margin-top: 15px;
+}
+#entry-copy{
+  /*margin: 50px 0;*/
+  padding: 70px 0;
+}
+#stats{
+  display: none;
+}
+#avg{
+  text-decoration: underline;
+}
+#progress-ping{
+  height: 2px;
+  display: none;
+  background-color: rgb(100,230,100);
+}
+.progress{
+  background-color: transparent;
+  height: 2px;
+  box-shadow: none;
+}
+</style>
+
+</head>
+
+
+<body>
+
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <!-- Sorry...I borrowed this...it just made sense -->
+        <img src="/img/lolheader.png" class="img" alt="">
+
+
+      </div>
+    </div>
+    <center></center>
+    <div class="row">
+
+      <div class="col-md-8 col-md-offset-2">
+
+
+        <div class="chart-holder text-center">
+          <div id="entry-copy">
+            <h1>LAG!</h1>
+            <h3>Calcula tu ping antes de jugar</h3>
+          </div>
+          <div class="row text-center">
+            <div class="col-md-2 col-md-offset-5 text-center">
+              <img src="/img/radio.svg" id="radar" alt="">
+            </div>  
+          </div>
+
+          <div class="progress" id="progress">
+            <div class="progress-bar progress-ping" id="progress-ping" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+
+            </div>
+          </div>    
+        </div>
+
+
+
+        <canvas id="myChart"></canvas>
+
+
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="sel">
+                  <input type="radio" id="na" name="region-select" checked onclick="setHost('na')">
+                  <label for="na"> NA</label>
+
+                </div>
+                <div class="sel">
+                  <input type="radio" id="euw" name="region-select" onclick="setHost('euw')">
+                  <label for="euw"> EUW</label>
+
+                </div>
+
+
+              </div>
+
+
+              <div class="col-md-4 text-center">
+
+                <div class="sel">
+                  <input type="radio" id="eune" name="region-select" onclick="setHost('eune')">
+                  <label for="eune"> EUNE</label>
+
+                </div>
+                <div class="sel">
+                  <input type="radio" id="oce" name="region-select" onclick="setHost('oce')"> 
+                  <label for="oce"> OCE</label>
+
+                </div>
+
+
+
+              </div>
+
+              <div class="col-md-4 text-right">
+                <div class="sel">
+                  <input type="radio" id="lan" name="region-select" onclick="setHost('lan')"> 
+                  <label for="lan"> LAN</label>
+                </div>
+              </div>
+            </div>
+
+            <br>
+            <button  type="button" class="btn btn-success center-block no-float" onclick="begin();">TEST</button>
+
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <br><br>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4" id="stats">
+
+        <h4 class="">Ping: <span class="pull-right" id="running-ping"></span></h4>
+        <h4>Maximo: <span class="pull-right" id="max"></span></h4>
+        <h4>Minimo: <span class="pull-right" id="min"></span></h4>
+        <h2>promedio: <span class="pull-right" id="avg"></span></h2>
+        <br><br>
+        <span>El ping en el juego puede variar por diversos motivos independientes a la conexion de la red</span>
+      </div>
+
+
+
+    </div>
+    <br><br>
+  </div>
+
+</div>
+
+
+
+
+
+<script src="../js/ping.js" type="text/javascript"></script>
+<script src="/js/ping.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.0/Chart.bundle.min.js"></script> 
+</body>
+
+</html>
