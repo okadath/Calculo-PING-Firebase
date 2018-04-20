@@ -3,7 +3,7 @@ Calculo PING servers League of Leguends
 
 Este es el README de mi nueva aplicación en Firebase.
 
-Es utilizado Javascript para el calculo en vivo de el envio y recepcion de paquetes TCP para juegos en linea, simplemente es necesario utilizar la direccion IP segun el server a usar
+Es utilizado Javascript para el calculo en vivo del envio y recepcion de paquetes TCP para juegos en linea, simplemente es necesario utilizar la direccion IP segun el server a usar
 
 Servidores mundiales
 --------------------
