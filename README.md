@@ -17,4 +17,5 @@ Servidores de cada region de juego:
 
 puede ser usado para cualquier juego de red, simplemente substituyendo la IP
 
-asasas
+Grafico del estad de la red(toma 1 minuto obtenerlo)
+![Grafico del estado de la red](
