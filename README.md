@@ -15,7 +15,7 @@ Servidores de cada region de juego:
 + OCE - 104.160.156.1
 + LAN - 104.160.136.3
 
-puede ser usado para cualquier juego de red, simplemente substituyendo la IP
+Puede ser usado para cualquier juego de red, simplemente substituyendo la IP
 
 Grafico del estad de la red(toma 1 minuto obtenerlo)
-![Grafico del estado de la red](
+![Grafico del estado de la red](https://raw.githubusercontent.com/okadath/Calculo-PING-Firebase/master/screen.png)
